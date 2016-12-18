@@ -7,42 +7,123 @@
   <meta name="Keywords" content="">
   <meta name="Description" content="">
   <title>网页成绩单</title>
+  <style>
+  #conter { width:550px; height:400px; background:#C2C2C2;}
+  td {text-align:center;}
+  btn1{ text-align:center; }
+  .blueColor{background:#6633ff;}
+  .redColor{background:#ff6633;}
+  
+  #msgDiv {
+    z-index:101; 
+    width:500px;
+    height:400px;
+    background:#d2d2d2;
+    border:#336699 1px solid;
+    position:absolute;
+    left:50%;
+    top:20%;
+    font-size:12px;
+    margin-left:-225px; /*这几个*/
+    display: none;
+}
+#bgDiv {
+    display: none;
+    position:absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    background-color: #777;
+    filter:progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75);
+    opacity: 0.6;
+}
+ </style>
  </head>
  <body>
- <button type='button' name='添加学生' style=" display:block;background:red; width:100px; height;50px; ">添加学生</button>
- <button type='button' value='统计' style="diplay:block; background:blue; width:100px; height;50px;">统计</button>
-  <table border="2px" cellspacing="0" cellpadding="0" width="400px">
-<tr>
+ <div id="conter">
+ <input id='btn1' type='button' value='添加学生' style=" display:block; background:red; width:100px; height:30px; float:right; margin:20px;" />
+ <input id='btn2' type='button' value='统计' style="diplay:block; background:blue; width:100px; height:30px; float:right; margin:20px;" />
+<table id="tabl" border="2px" cellspacing="0" cellpadding="0" width="400px">
+<tr class='blueColor'>
 <th>姓名</th><th>微积分</th><th>线性代数</th><th>C语言</th><th>操作</th>
 </tr>
-<tr>
+<tr class='redColor'>
 <td>王大大</td><td>98</td><td>89</td><td>76</td>
 <td>
-<input type='button' value='编辑'>
-<input type='button' value='删除'>
+<input type='button' value='编辑' onclick="showDetail()" />
+<input type='button' value='删除' onclick="del('tb',this)"/>
 </td>
 </tr>
-<tr>
+<tr class='blueColor'>
 <td>胡春华</td><td>99</td><td>88</td><td>89</td>
 <td>
-<input type='button' value='编辑'>
-<input type='button' value='删除'>
+<input type='button' value='编辑' />
+<input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
-<tr>
+<tr class='redColor'>
 <td>悟空</td><td>66</td><td>88</td><td>85</td>
 <td>
-<input type='button' value='编辑'>
-<input type='button' value='删除'>
+<input type='button' value='编辑' />
+<input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
-<tr>
+<tr class='blueColor'>
 <td>智多星</td><td>89</td><td>86</td><td>83</td>
 <td>
-<input type='button' value='编辑'>
-<input type='button' value='删除'>
+<input type='button' value='编辑' onclick="edit('tb',this)" />
+<input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
  </table>
+ </div>
+<!-- 遮罩层 -->
+ <div id="msgDiv">
+	<div id="msgShut">关闭</div>
+    <div id="msgDetail"></div>
+</div>
+<div id="bgDiv"></div>
+<p></p>
+
+
+  <script>
+   //实现删除功能
+ function del(tableID,obj){
+	var rowIndex=obj.parentElement.parentElement.rowIndex;
+	obj.parentElement.parentElement.parentElement.deleteRow(rowIndex);
+ } 
+ // 展示的是表格那下一行的文本内容  没有样式(表格的边框)
+ // 第一行和最后一列都不能要 (但是需要再添加一个按钮 把修改之后的文本覆盖原表格中的这一行)  考虑循环
+function edit(tableID,obj){
+	document.getElementById("tabl").rows[0].cells[0].innerHTML="修改值"
+alert(document.getElementById("tabl").rows[1].innerText+"覆盖按钮");
+}
+
+// 遮罩层的script
+function showDetail(){//show detail
+	//msgDiv
+	var msgDiv = document.getElementById("msgDiv");
+	msgDiv.style.marginTop = -75 + document.documentElement.scrollTop + "px";
+	//bgDiv
+	var bgDiv = document.getElementById("bgDiv");
+	bgDiv.style.width = document.body.offsetwidth + "px";
+	bgDiv.style.height = screen.height + "px";
+	//msgShut
+	var msgShut = document.getElementById("msgShut");
+	msgShut.onclick = function(){
+		bgDiv.style.display = msgDiv.style.display = "none";
+	}
+	//content
+	msgDiv.style.display = bgDiv.style.display = "block";
+	var msgDetail = document.getElementById("msgDetail");
+	msgDetail.innerHTML = "<p style='line-height:50px;font-size:30px;text-align:center'>弹出当前点击按钮的一行表格</p>";
+	//在这上面接上另一个函数 用来展示此按钮的一行内容
+}
+
+
+//考虑当前方法
+//var a = document.getElementById("a");
+//a.rows[0].cells[0].innerHTML = "修改的值";//rows[0]代表表格的第一行，cells[0]代表引用行的第一列
+ </script>
  </body>
 </html>
