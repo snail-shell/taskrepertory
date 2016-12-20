@@ -88,7 +88,7 @@
  </table>
  </div>
 <!-- 遮罩层 -->
- <div id="msgDiv">
+ <div id="msgDiv" key="1">
 	<div id="msgShut">关闭</div>
     <div id="msgDetail"></div>
 </div>
@@ -111,49 +111,43 @@
 	var rowIndex=obj.parentElement.parentElement.rowIndex;
 	obj.parentElement.parentElement.parentElement.deleteRow(rowIndex);
  } 
- /*
- // 展示的是表格那下一行的文本内容  没有样式(表格的边框)
- // 第一行和最后一列都不能要 (但是需要再添加一个按钮 把修改之后的文本覆盖原表格中的这一行)  考虑循环
-function edit(tableID,obj){
-	document.getElementById("tabl").rows[0].cells[0].innerHTML="修改值";  //赋值 覆盖
-	alert(document.getElementById("tabl").rows[0].innerText+"覆盖按钮");
-}            此版块已经无用
-*/
 // <button  onclick="editor('tb',this)">传入数据</button>  传入数值
 function editor(tableID,obj){
-	document.getElementById("inp1").value=document.getElementById('tabl').rows[2].cells[0].innerText;
-	document.getElementById("inp2").value=document.getElementById('tabl').rows[2].cells[1].innerText;
-	document.getElementById("inp3").value=document.getElementById('tabl').rows[2].cells[2].innerText;
-	document.getElementById("inp4").value=document.getElementById('tabl').rows[2].cells[3].innerText;
+	var msgDiv=document.getElementById("msgDiv");
+	var key=msgDiv.getAttribute('key');
+	document.getElementById("inp1").value=document.getElementById('tabl').rows[key].cells[0].innerText;
+	document.getElementById("inp2").value=document.getElementById('tabl').rows[key].cells[1].innerText;
+	document.getElementById("inp3").value=document.getElementById('tabl').rows[key].cells[2].innerText;
+	document.getElementById("inp4").value=document.getElementById('tabl').rows[key].cells[3].innerText;
 	}
 //<button  onclick="amend('tb',this)">保存修改</button>   保存修改后的值
 	function amend(tableID,obj){
 	if(document.getElementById('inp5').value==""||document.getElementById("inp1").value==document.getElementById("inp5").value){
-	document.getElementById('tabl').rows[2].cells[0].innerHTML=document.getElementById('inp1').value;
+	document.getElementById('tabl').rows[key].cells[0].innerHTML=document.getElementById('inp1').value;
 	}else{
-	document.getElementById('tabl').rows[2].cells[0].innerHTML=document.getElementById('inp1').value=document.getElementById('inp5').value;
+	document.getElementById('tabl').rows[key].cells[0].innerHTML=document.getElementById('inp1').value=document.getElementById('inp5').value;
 	}
 	if(document.getElementById("inp6").value==""||document.getElementById("inp2").value==document.getElementById("inp6").value){
-	document.getElementById('tabl').rows[2].cells[1].innerHTML=document.getElementById('inp2').value;
+	document.getElementById('tabl').rows[key].cells[1].innerHTML=document.getElementById('inp2').value;
 	}else{
-	document.getElementById('tabl').rows[2].cells[1].innerHTML=document.getElementById('inp2').value=document.getElementById('inp6').value;
+	document.getElementById('tabl').rows[key].cells[1].innerHTML=document.getElementById('inp2').value=document.getElementById('inp6').value;
 	}
 	if(document.getElementById("inp7").value==""||document.getElementById("inp3")==document.getElementById("inp7").value){
-	document.getElementById('tabl').rows[2].cells[2].innerHTML=document.getElementById('inp3').value;
+	document.getElementById('tabl').rows[key].cells[2].innerHTML=document.getElementById('inp3').value;
 	}else{
-	document.getElementById('tabl').rows[2].cells[2].innerHTML=document.getElementById('inp3').value=document.getElementById('inp7').value;
+	document.getElementById('tabl').rows[key].cells[2].innerHTML=document.getElementById('inp3').value=document.getElementById('inp7').value;
 	}
 	if(document.getElementById("inp8").value==""||document.getElementById("inp4")==document.getElementById("inp8").value){
-	document.getElementById('tabl').rows[2].cells[3].innerHTML=document.getElementById('inp4').value;
+	document.getElementById('tabl').rows[key].cells[3].innerHTML=document.getElementById('inp4').value;
 	}else{
-	document.getElementById('tabl').rows[2].cells[3].innerHTML=document.getElementById('inp4').value=document.getElementById('inp8').value;
+	document.getElementById('tabl').rows[key].cells[3].innerHTML=document.getElementById('inp4').value=document.getElementById('inp8').value;
 	}
 	//document.getElementByid("文本框的ID").value=document.getElementById（'表格td的ID'）.innerText
 
 
 }
 // 遮罩层的script
-function showDetail(){//show detail
+function showDetail(){
 	//msgDiv
 	var msgDiv = document.getElementById("msgDiv");
 	msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
@@ -170,15 +164,7 @@ function showDetail(){//show detail
 	}
 	//content
 	msgDiv.style.display = bgDiv.style.display=compile.style.display= "block";
-
-	 
-
 }
-
-
-//考虑当前方法
-//var a = document.getElementById("a");
-//a.rows[0].cells[0].innerHTML = "修改的值";//rows[0]代表表格的第一行，cells[0]代表引用行的第一列
- </script>
- </body>
+</script>
+</body>
 </html>
