@@ -51,8 +51,10 @@
  </head>
  <body>
  <div id="conter">
- <input id='btn1' type='button' value='添加学生' style=" display:block; background:red; width:100px; height:30px; float:right; margin:20px;" />
+ <input id='btn1' type='button' value='添加学生' style=" display:block; background:red; width:100px; height:30px; float:right; margin:20px;" onclick="adj()" />
  <input id='btn2' type='button' value='统计' style="diplay:block; background:blue; width:100px; height:30px; float:right; margin:20px;" />
+
+
 <table id="tabl" border="2px" cellspacing="0" cellpadding="0" width="400px">
 <tr class='blueColor'>
 <th>姓名</th><th>微积分</th><th>线性代数</th><th>C语言</th><th>操作</th>
@@ -60,35 +62,35 @@
 <tr class='redColor'>
 <td>王大大</td><td>98</td><td>89</td><td>76</td>
 <td>
-<input type='button' value='编辑' onclick="showDetail()" />
+<input type='button' value='编辑' onclick="showDetail(1)" />
 <input type='button' value='删除' onclick="del('tb',this)"/>
 </td>
 </tr>
 <tr class='blueColor'>
 <td>胡春华</td><td>99</td><td>88</td><td>89</td>
 <td>
-<input type='button' value='编辑' onclick="showDetail()" />
+<input type='button' value='编辑' onclick="showDetail(2)" />
 <input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
 <tr class='redColor'>
 <td>悟空</td><td>66</td><td>88</td><td>85</td>
 <td>
-<input type='button' value='编辑' onclick="showDetail()" />
+<input type='button' value='编辑' onclick="showDetail(3)" />
 <input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
 <tr class='blueColor'>
 <td>智多星</td><td>89</td><td>86</td><td>83</td>
 <td>
-<input type='button' value='编辑' onclick="showDetail()" />
+<input type='button' value='编辑' onclick="showDetail(4)" />
 <input type='button' value='删除' onclick="del('tb',this)" />
 </td>
 </tr>
  </table>
  </div>
 <!-- 遮罩层 -->
- <div id="msgDiv" key="1">
+ <div id="msgDiv">
 	<div id="msgShut">关闭</div>
     <div id="msgDetail"></div>
 </div>
@@ -103,8 +105,8 @@
 <button  onclick="editor('tb',this)">传入数据</button>
 
 <button  onclick="amend('tb',this)">保存修改</button>
-
 </div>
+
   <script>
    //实现删除功能
  function del(tableID,obj){
@@ -147,9 +149,10 @@ function editor(tableID,obj){
 
 }
 // 遮罩层的script
-function showDetail(){
+function showDetail(num){
 	//msgDiv
 	var msgDiv = document.getElementById("msgDiv");
+	msgDiv.setAttribute('key',num);
 	msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
 	//bgDiv
 	var bgDiv = document.getElementById("bgDiv");
@@ -165,6 +168,8 @@ function showDetail(){
 	//content
 	msgDiv.style.display = bgDiv.style.display=compile.style.display= "block";
 }
+// 增加学生功能
+
 </script>
 </body>
 </html>
