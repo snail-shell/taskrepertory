@@ -47,6 +47,12 @@
 	display:none;
 	z-index:101;
 }
+	#adder{
+	width:450px;
+	height:100px;
+	background:#66ffff;
+
+	}
  </style>
  </head>
  <body>
@@ -106,7 +112,12 @@
 
 <button  onclick="amend('tb',this)">保存修改</button>
 </div>
-
+<!-- 增加学生 -->
+<div id="adder">
+<input type="text" id="inpu1"  style="width:100px;" /><input type="text" id="inpu2" style="width:100px;" /><input type="text" id="inpu3" style="width:100px;" /><input type="text" id="inpu4" style="width:100px;" />
+<br/>
+<input type="button" value="确认提交" id="btn" />
+</div>
   <script>
    //实现删除功能
  function del(tableID,obj){
@@ -169,6 +180,55 @@ function showDetail(num){
 	msgDiv.style.display = bgDiv.style.display=compile.style.display= "block";
 }
 // 增加学生功能
+/*
+<!-- 增加学生 -->
+<div id="adder">
+<input type="text" id="inpu1"  style="width:100px;" /><input type="text" id="inpu2" style="width:100px;" /><input type="text" id="inpu3" style="width:100px;" /><input type="text" id="inpu4" style="width:100px;" />
+<br/>
+<input type="button" value="确认提交" id="btn" />
+</div>
+*/
+
+document.getElementById("btn").onclick=function(){
+
+	//获取基本信息
+	var inpu1Value=document.getElementById("inpu1").value;
+	var inpu2Value=document.getElementById("inpu2").value;
+	var inpu3Value=document.getElementById("inpu3").value;
+	var inpu4Value=document.getElementById("inpu4").value;
+	//利用基本信息创建TD
+	var inpu1TdElement=document.createElement("td");
+	var textinpu1Element=document.createTextNode(inpu1Value);
+	inpu1TdElement.appendChild(textinpu1Element);
+
+	var inpu2TdElement=document.createElement("td");
+	var textinpu2Element=document.createTextNode(inpu2Value);
+	inpu2TdElement.appendChild(textinpu2Element);
+
+	var inpu3TdElement=document.createElement("td");
+	var textinpu3Element=document.createTextNode(inpu3Value);
+	inpu3TdElement.appendChild(textinpu3Element);
+
+	var inpu4TdElement=document.createElement("td");
+	var textinpu4Element=document.createTextNode(inpu4Value);
+	inpu4TdElement.appendChild(textinpu4Element);
+
+	//创建tr
+	var trElement=document.createElement("tr");
+	//把td增加到tr上去
+	trElement.appendChild(inpu1TdElement);
+	trElement.appendChild(inpu2TdElement);
+	trElement.appendChild(inpu3TdElement);
+	trElement.appendChild(inpu4TdElement);
+
+	//创建tbody
+	var tbodyElement=document.createElement("tbody");
+	//把tr增加到tbody上去
+	tbodyElement.appendChild(trElement);
+	//把tbody增加到table上
+	var tablElement=document.getElementById("tabl");
+	tablElement.appendChild(tbodyElement);
+}
 
 </script>
 </body>
