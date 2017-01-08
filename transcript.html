@@ -5,40 +5,224 @@
 		<title></title>
 
 	</head>
+	<style>
+	#deposit input {width: 50px; height: 30px;}
+	#popup input { margin-top:20px; width: 50px; height: 30px;}
+	#msgDiv {
+    z-index:101; 
+    width:500px;
+    height:400px;
+    background:red;
+    border:#336699 1px solid;
+    position:absolute;
+    left:50%;
+    top:20%;
+    font-size:12px;
+    margin-left:-225px; /*这几个*/
+    display: none;
+}
+	#bgDiv {
+    display: none;
+    position:absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    background-color: #777;
+    filter:progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75);
+    opacity: 0.6;
+}
+	#deposit{
+	width:300px;
+	height:200px;
+	background:#00ffff;
+	position:absolute;
+	top:25%;
+	left:40%;
+	display:none;
+	z-index:101;
+}
+	#popup{
+	width:300px;
+	height:200px;
+	background:#00ffff;
+	position:absolute;
+	top:25%;
+	left:40%;
+	/*display:none;*/
+	z-index:104;
+}
+	ul{margin: 0px; border: 0px;}
+	#count{ width: 50px; height: 30px; background:#f9c;}
+	#attached{width:170px; height: 150px; background:#f6c; position: absolute; top:10px; left: 210px; display: none;}
+	#attached li{width: 100px; font-size: 16px; height:48px; line-height: 36px; text-align: center; list-style-type: none; border: 1px dashed #6495ED; background:#336699 ;}
+	#attached a{display: block; width: 100px; height:50px; line-height: 50px; text-decoration: none;}
+	#attached a:hover{ background: red;}
+	</style>
 	<body>
+		<!-- 遮罩层 -->
+ <div id="msgDiv">
+	<div id="msgShut">关闭</div>
+    <div id="msgDetail"></div>
+</div>
+<div id="bgDiv"></div>
+
+
+		<button id="adduser" onclick="addStudents()">增加学生</button> 
+		<button id="count" onclick="census()">统计</button>
+		<div id="attached">
+			<ul>
+				<li id="btn-mean"><a href="#">各科平均</a></li>
+				<li id="btn-total"><a href="#">各科总分</a></li>
+				<li id="btn-personal"><a href="#">个人平均</a></li>
+			</ul>
+		</div>
 		<table id="source" cellpadding="0" cellspacing="0" border="1">
 			<tr>
-				<th>姓名</th><th>线性代数</th><th>微积分</th><th>C语言</th><th>操作</th>
+				<td>姓名</td><td>线性代数</td><td>微积分</td><td>C语言</td><td>操作</td>
 			</tr>
 			<tr>
 			<td>习大大</td><<td>98</td><td>97</td><td>96</td><td>
-				<input type="button" value="编辑" /><input type="button" value="删除" onclick="del(this)" /></td>
+				<input type="button" value="编辑" onclick="editor(this)" /><input type="button" value="删除" onclick="del(this)" /></td>
 			</tr>
 			<tr>
-			<td>胡春华</td><<td>98</td><td>97</td><td>96</td><td>
-				<input type="button" value="编辑" /><input type="button" value="删除" onclick="del(this)" /></td>
+			<td>胡春华</td><<td>88</td><td>87</td><td>86</td><td>
+				<input type="button" value="编辑" onclick="editor(this)" /><input type="button" value="删除" onclick="del(this)" /></td>
 			</tr>
 			<tr>
-			<td>库克</td><<td>98</td><td>97</td><td>96</td><td>
-				<input type="button" value="编辑" /><input type="button" value="删除" onclick="del(this)" /></td>
+			<td>库克</td><<td>78</td><td>77</td><td>76</td><td>
+				<input type="button" value="编辑" onclick="editor(this)" /><input type="button" value="删除" onclick="del(this)" /></td>
 			</tr>
 			<tr>
-			<td>扎克伯格</td><<td>98</td><td>97</td><td>96</td><td>
-				<input type="button" value="编辑" /><input type="button" value="删除" onclick="del(this)" /></td>
+			<td>扎克伯格</td><<td>68</td><td>67</td><td>66</td><td>
+				<input type="button" value="编辑" onclick="editor(this)" /><input type="button" value="删除" onclick="del(this)" /></td>
 			</tr>
 		</table>
+		
 		<table id="resort" cellpadding="0" cellspacing="0" border="1">
-			
 		</table>
+		
+		<div id="popup">
+		<input type="text" value="姓名" id="input1" />
+		<input type="text" value="0" id="input2" />
+		<input type="text" value="0" id="input3" />
+		<input type="text" value="0" id="input4" />
+		<input type="text" value="操作" id="input5" />
+		</div>
+		
+		<!--创建四个input标签--> 
+		<div id="deposit">
+		<input type="text" value="td值" id="inp1" />
+		<input type="text" value="td值" id="inp2" />
+		<input type="text" value="td值" id="inp3" />
+		<input type="text" value="td值" id="inp4" />
+		</div>
 		<button id="sort-btn">重组</button>
 		
 		<script>
 			//删除功能
-			function del(r){
-				var i=r.parentElement.parentElement.rowIndex;
+			function del(td){
+				var i=td.parentElement.parentElement.rowIndex;
 				document.getElementById('source').deleteRow(i);
 			}
+			// 关于编辑的想法
+			// 想法:通过函数实现 我想点击某一行TD单元格,弹出这一行TR(包括原先的数据),
+			//把这一行tr数据传入到input标签里面去,通过比较是否有修改,再决定是否修改
+			//指出来某一行的数据
+		function editor(td){
+				var inp1=document.getElementById('inp1');
+				var inp2=document.getElementById('inp2');
+				var inp3=document.getElementById('inp3');
+				var inp4=document.getElementById('inp4');
+				var i=td.parentElement.parentElement.rowIndex;
+				var newtr=document.getElementById('source').rows.item(i);
+				//document.getElementById('popup').innerHTML=newtr.innerText;
+				//考虑来一个数组存放 然后赋值给input
+				var arrTr=[];
+				for(var j=0;j<4;j++){
+				arrTr.push(newtr.getElementsByTagName('td')[j].innerHTML);
+				inp1.value=arrTr[0];
+				inp2.value=arrTr[1];
+				inp3.value=arrTr[2];
+				inp4.value=arrTr[3];
+				}
+				//console.log(arrTr);
+			var msgDiv = document.getElementById("msgDiv");
+				msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
+			var bgDiv = document.getElementById("bgDiv");
+				bgDiv.style.width = document.body.offsetwidth + "px";
+				bgDiv.style.height = screen.height + "px";
+			var deposit=document.getElementById("deposit");
+			var msgShut = document.getElementById("msgShut");
 			
+			msgShut.onclick = function(){
+			// 野蛮覆盖  
+				newtr.cells[0].innerText=inp1.value;newtr.cells[1].innerText=inp2.value;
+				newtr.cells[2].innerText=inp3.value;newtr.cells[3].innerText=inp4.value;
+				//console.log(newtr.cells);
+				bgDiv.style.display = msgDiv.style.display=deposit.style.display = "none";
+			}
+				//content
+				msgDiv.style.display = bgDiv.style.display=deposit.style.display= "block";
+		}
+		// 增加学生 
+		function addStudents(){
+			var source=document.getElementById("source");
+			var trrows=source.rows.length;
+			console.log(trrows);
+				var input1=document.getElementById('input1');
+				var input2=document.getElementById('input2');
+				var input3=document.getElementById('input3');
+				var input4=document.getElementById('input4');
+				var input5=document.getElementById('input5');
+			var tr=document.createElement("tr"); source.appendChild(tr);
+			var td1=document.createElement("td"); tr.appendChild(td1);
+			var td2=document.createElement("td"); tr.appendChild(td2);
+			var td3=document.createElement("td"); tr.appendChild(td3);
+			var td4=document.createElement("td"); tr.appendChild(td4);
+			var td5=document.createElement("td"); tr.appendChild(td5);
+			var msgDiv = document.getElementById("msgDiv");
+				msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
+			var bgDiv = document.getElementById("bgDiv");
+				bgDiv.style.width = document.body.offsetwidth + "px";
+				bgDiv.style.height = screen.height + "px";
+			var popup=document.getElementById("popup");
+			var msgShut = document.getElementById("msgShut");
+			msgShut.onclick = function(){
+				bgDiv.style.display = msgDiv.style.display=popup.style.display = "none";
+				 td1.innerHTML=input1.value;
+				 td2.innerHTML=input2.value;
+				 td3.innerHTML=input3.value;
+				 td4.innerHTML=input4.value;
+				 td5.innerHTML="<td><input type='button' value='编辑' onclick='editor(this)' /><input type='button' value='删除' onclick='del(this)' /></td>"
+			}
+				msgDiv.style.display = bgDiv.style.display=popup.style.display= "block";
+		}
+			
+		
+		
+				//统计功能 之附属菜单的显现
+				count.onmouseover=counts;
+			function counts (){
+			var count=document.getElementById('count');
+			var attached=document.getElementById('attached');
+			var timer=null;
+			
+			count.onmouseover=show;
+			count.onmouseout=hide;
+			
+			attached.onmouseover=show;
+			attached.onmouseout=hide;
+			
+			function show(){
+				clearInterval(timer);
+				attached.style.display='block';
+			}
+			function hide(){
+				timer=setTimeout(function(){
+					attached.style.display='none';
+				},200);
+			}
+		}
 			var data=[];
 			function getData(){
 				var origintr=document.getElementById("source").getElementsByTagName("tr");
@@ -48,16 +232,95 @@
 					data[i]=[];
 					data[i].push(tdName);
 					for(var j=1;j<4;j++){
-						 num+=origintr[i].getElementsByTagName("td")[j].innerHTML;
+						 num=origintr[i].getElementsByTagName("td")[j].innerHTML;
 						 data[i].push(num);
 					}
 				}
-				return data;
 				console.log(data);
+				return data;
 			}
 			
-			
-			
+			//学科平均 
+			function mean(){
+				var source=document.getElementById('source');
+				var subjeceMean="各科平均";
+				var linear=0;
+				var calculs=0;
+				var language=0;
+				for(var i=1;i<source.rows.length;i++){
+					linear+=parseInt(source.rows[i].cells[1].innerText);
+					var line=Math.floor(linear/(source.rows.length-1));
+				
+				}
+				for(var i=1;i<source.rows.length;i++){
+					calculs+=parseInt(source.rows[i].cells[2].innerText);
+					var calcul=Math.floor(calculs/(source.rows.length-1));
+				}
+				for(var i=1;i<source.rows.length;i++){
+					language+=parseInt(source.rows[i].cells[3].innerText);
+					var langua=Math.floor(language/(source.rows.length-1));
+				}
+//				var tr="<tr><td>"+subjeceMean+"</td>"+"<td>"+linear+"</td>"+"<td>"+calculs+"</td>"
+//						+"<td>"+language+"</td></tr>"; 
+//  上面这种格式写行数据无效  不知原因
+				var resort=document.getElementById("resort");
+				var tr=document.createElement("tr"); resort.appendChild(tr);
+				var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科平均";
+				var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=line;
+				var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calcul;
+				var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=langua;
+			}
+					//学科总分 
+				function total(){
+				var source=document.getElementById('source');
+				var subjeceMean="各科平均"
+				var linear=0;
+				var calculs=0;
+				var language=0;
+				for(var i=1;i<source.rows.length;i++){
+					linear+=parseInt(source.rows[i].cells[1].innerText);
+				}
+				for(var i=1;i<source.rows.length;i++){
+					calculs+=parseInt(source.rows[i].cells[2].innerText);
+				}
+				for(var i=1;i<source.rows.length;i++){
+					language+=parseInt(source.rows[i].cells[3].innerText);
+				}
+				var resort=document.getElementById("resort");
+				var tr=document.createElement("tr"); resort.appendChild(tr);
+				var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科总分";
+				var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=linear;
+				var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calculs;
+				var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=language;	
+			}
+				//学生平均分
+				function personal(){
+					var source=document.getElementById("source");
+					var r1mean=0,r2mean=0,r3mean=0,r4mean=0;
+					for(var i=1;i<4;i++){
+						r1mean+=parseInt(source.rows[1].cells[i].innerText);
+						var r1=Math.floor(r1mean/3);
+					}
+					for(var i=1;i<4;i++){
+						r2mean+=parseInt(source.rows[2].cells[i].innerText);
+						var r2=Math.floor(r2mean/3);
+					}
+					for(var i=1;i<4;i++){
+						r3mean+=parseInt(source.rows[3].cells[i].innerText);
+						var r3=Math.floor(r3mean/3);
+					}
+					for(var i=1;i<4;i++){
+						r4mean+=parseInt(source.rows[4].cells[i].innerText);
+						var r4=Math.floor(r4mean/3);
+					}
+					var resort=document.getElementById("resort");
+					var tr=document.createElement("tr"); resort.appendChild(tr);
+					var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML=r1;
+					var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=r2;
+					var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=r3;
+					var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=r4;
+				}
+
 			function render(data){
 				var newtable=[];
 				for(var i=0;i<data.length;i++){
@@ -67,16 +330,21 @@
 				}
 				
 				document.getElementById("resort").innerHTML=newtable.join("");
-				console.log(newtable);
 			}
-			
 			function btnHandle(){
 				var aqiData=getData();
 				render(aqiData);
-			}
-			
+//				下面三行加上去就相当于在执行之前就已经执行了一次函数
+//				var aqimean=mean();
+//				var aqitotal=total();
+//				var aqipersonal=personal();
+			};
+
 			function init(){
 				document.getElementById('sort-btn').onclick=btnHandle;
+				document.getElementById('btn-mean').onclick=mean;
+				document.getElementById('btn-total').onclick=total;
+				document.getElementById('btn-personal').onclick=personal;
 			}
 			init();
 		</script>
