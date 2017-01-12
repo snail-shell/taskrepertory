@@ -121,231 +121,230 @@
 		<script>
 			//删除功能
 			function del(td){
-				var i=td.parentElement.parentElement.rowIndex;
-				document.getElementById('source').deleteRow(i);
-			}
-			// 关于编辑的想法
-			// 想法:通过函数实现 我想点击某一行TD单元格,弹出这一行TR(包括原先的数据),
-			//把这一行tr数据传入到input标签里面去,通过比较是否有修改,再决定是否修改
-			//指出来某一行的数据
-		function editor(td){
-				var inp1=document.getElementById('inp1');
-				var inp2=document.getElementById('inp2');
-				var inp3=document.getElementById('inp3');
-				var inp4=document.getElementById('inp4');
-				var i=td.parentElement.parentElement.rowIndex;
-				var newtr=document.getElementById('source').rows.item(i);
-				//document.getElementById('popup').innerHTML=newtr.innerText;
-				//考虑来一个数组存放 然后赋值给input
-				var arrTr=[];
-				for(var j=0;j<4;j++){
-				arrTr.push(newtr.getElementsByTagName('td')[j].innerHTML);
-				inp1.value=arrTr[0];
-				inp2.value=arrTr[1];
-				inp3.value=arrTr[2];
-				inp4.value=arrTr[3];
+					var i=td.parentElement.parentElement.rowIndex;
+					document.getElementById('source').deleteRow(i);
 				}
-				//console.log(arrTr);
-			var msgDiv = document.getElementById("msgDiv");
-				msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
-			var bgDiv = document.getElementById("bgDiv");
-				bgDiv.style.width = document.body.offsetwidth + "px";
-				bgDiv.style.height = screen.height + "px";
-			var deposit=document.getElementById("deposit");
-			var msgShut = document.getElementById("msgShut");
-			
-			msgShut.onclick = function(){
-			// 野蛮覆盖  
-				newtr.cells[0].innerText=inp1.value;newtr.cells[1].innerText=inp2.value;
-				newtr.cells[2].innerText=inp3.value;newtr.cells[3].innerText=inp4.value;
-				//console.log(newtr.cells);
-				bgDiv.style.display = msgDiv.style.display=deposit.style.display = "none";
-			}
-				//content
-				msgDiv.style.display = bgDiv.style.display=deposit.style.display= "block";
-		}
-		// 增加学生 
-		function addStudents(){
-			var source=document.getElementById("source");
-			var trrows=source.rows.length;
-			console.log(trrows);
-				var input1=document.getElementById('input1');
-				var input2=document.getElementById('input2');
-				var input3=document.getElementById('input3');
-				var input4=document.getElementById('input4');
-				var input5=document.getElementById('input5');
-			var tr=document.createElement("tr"); source.appendChild(tr);
-			var td1=document.createElement("td"); tr.appendChild(td1);
-			var td2=document.createElement("td"); tr.appendChild(td2);
-			var td3=document.createElement("td"); tr.appendChild(td3);
-			var td4=document.createElement("td"); tr.appendChild(td4);
-			var td5=document.createElement("td"); tr.appendChild(td5);
-			var msgDiv = document.getElementById("msgDiv");
-				msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
-			var bgDiv = document.getElementById("bgDiv");
-				bgDiv.style.width = document.body.offsetwidth + "px";
-				bgDiv.style.height = screen.height + "px";
-			var popup=document.getElementById("popup");
-			var msgShut = document.getElementById("msgShut");
-			msgShut.onclick = function(){
-				bgDiv.style.display = msgDiv.style.display=popup.style.display = "none";
-				 td1.innerHTML=input1.value;
-				 td2.innerHTML=input2.value;
-				 td3.innerHTML=input3.value;
-				 td4.innerHTML=input4.value;
-				 td5.innerHTML="<td><input type='button' value='编辑' onclick='editor(this)' /><input type='button' value='删除' onclick='del(this)' /></td>"
-			}
-				msgDiv.style.display = bgDiv.style.display=popup.style.display= "block";
-		}
-			
-		
-		
-				//统计功能 之附属菜单的显现
-				count.onmouseover=counts;
-			function counts (){
-			var count=document.getElementById('count');
-			var attached=document.getElementById('attached');
-			var timer=null;
-			
-			count.onmouseover=show;
-			count.onmouseout=hide;
-			
-			attached.onmouseover=show;
-			attached.onmouseout=hide;
-			
-			function show(){
-				clearInterval(timer);
-				attached.style.display='block';
-			}
-			function hide(){
-				timer=setTimeout(function(){
-					attached.style.display='none';
-				},200);
-			}
-		}
-			var data=[];
-			function getData(){
-				var origintr=document.getElementById("source").getElementsByTagName("tr");
-				for(var i=0;i<origintr.length;i++){
-					var tdName=origintr[i].getElementsByTagName('td')[0].innerText;
-					var num="";
-					data[i]=[];
-					data[i].push(tdName);
-					for(var j=1;j<4;j++){
-						 num=origintr[i].getElementsByTagName("td")[j].innerHTML;
-						 data[i].push(num);
+					// 关于编辑的想法
+					// 想法:通过函数实现 我想点击某一行TD单元格,弹出这一行TR(包括原先的数据),
+					//把这一行tr数据传入到input标签里面去,通过比较是否有修改,再决定是否修改
+					//指出来某一行的数据
+			function editor(td){
+					var inp1=document.getElementById('inp1');
+					var inp2=document.getElementById('inp2');
+					var inp3=document.getElementById('inp3');
+					var inp4=document.getElementById('inp4');
+					var i=td.parentElement.parentElement.rowIndex;
+					var newtr=document.getElementById('source').rows.item(i);
+					//考虑来一个数组存放 然后赋值给input
+					var arrTr=[];
+					for(var j=0;j<4;j++){
+					arrTr.push(newtr.getElementsByTagName('td')[j].innerHTML);
+					inp1.value=arrTr[0];
+					inp2.value=arrTr[1];
+					inp3.value=arrTr[2];
+					inp4.value=arrTr[3];
 					}
-				}
-				console.log(data);
-				return data;
-			}
+					//console.log(arrTr);
+					var msgDiv = document.getElementById("msgDiv");
+						msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
+					var bgDiv = document.getElementById("bgDiv");
+						bgDiv.style.width = document.body.offsetwidth + "px";
+						bgDiv.style.height = screen.height + "px";
+					var deposit=document.getElementById("deposit");
+					var msgShut = document.getElementById("msgShut");
 			
-			//学科平均 
-			function mean(){
-				var source=document.getElementById('source');
-				var subjeceMean="各科平均";
-				var linear=0;
-				var calculs=0;
-				var language=0;
-				for(var i=1;i<source.rows.length;i++){
-					linear+=parseInt(source.rows[i].cells[1].innerText);
-					var line=Math.floor(linear/(source.rows.length-1));
-				
+					msgShut.onclick = function(){
+						// 野蛮覆盖  
+						newtr.cells[0].innerText=inp1.value;newtr.cells[1].innerText=inp2.value;
+						newtr.cells[2].innerText=inp3.value;newtr.cells[3].innerText=inp4.value;
+						//console.log(newtr.cells);
+						bgDiv.style.display = msgDiv.style.display=deposit.style.display = "none";
+					}
+					//content
+					msgDiv.style.display = bgDiv.style.display=deposit.style.display= "block";
 				}
-				for(var i=1;i<source.rows.length;i++){
-					calculs+=parseInt(source.rows[i].cells[2].innerText);
-					var calcul=Math.floor(calculs/(source.rows.length-1));
-				}
-				for(var i=1;i<source.rows.length;i++){
-					language+=parseInt(source.rows[i].cells[3].innerText);
-					var langua=Math.floor(language/(source.rows.length-1));
-				}
-//				var tr="<tr><td>"+subjeceMean+"</td>"+"<td>"+linear+"</td>"+"<td>"+calculs+"</td>"
-//						+"<td>"+language+"</td></tr>"; 
-//  上面这种格式写行数据无效  不知原因
-				var resort=document.getElementById("resort");
-				var tr=document.createElement("tr"); resort.appendChild(tr);
-				var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科平均";
-				var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=line;
-				var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calcul;
-				var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=langua;
-			}
-					//学科总分 
-				function total(){
-				var source=document.getElementById('source');
-				var subjeceMean="各科平均"
-				var linear=0;
-				var calculs=0;
-				var language=0;
-				for(var i=1;i<source.rows.length;i++){
-					linear+=parseInt(source.rows[i].cells[1].innerText);
-				}
-				for(var i=1;i<source.rows.length;i++){
-					calculs+=parseInt(source.rows[i].cells[2].innerText);
-				}
-				for(var i=1;i<source.rows.length;i++){
-					language+=parseInt(source.rows[i].cells[3].innerText);
-				}
-				var resort=document.getElementById("resort");
-				var tr=document.createElement("tr"); resort.appendChild(tr);
-				var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科总分";
-				var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=linear;
-				var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calculs;
-				var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=language;	
-			}
-				//学生平均分
-				function personal(){
+				// 增加学生 
+			function addStudents(){
 					var source=document.getElementById("source");
-					var r1mean=0,r2mean=0,r3mean=0,r4mean=0;
-					for(var i=1;i<4;i++){
-						r1mean+=parseInt(source.rows[1].cells[i].innerText);
-						var r1=Math.floor(r1mean/3);
+					var trrows=source.rows.length;
+					//console.log(trrows);
+					var input1=document.getElementById('input1');
+					var input2=document.getElementById('input2');
+					var input3=document.getElementById('input3');
+					var input4=document.getElementById('input4');
+					var input5=document.getElementById('input5');
+					var tr=document.createElement("tr"); source.appendChild(tr);
+					var td1=document.createElement("td"); tr.appendChild(td1);
+					var td2=document.createElement("td"); tr.appendChild(td2);
+					var td3=document.createElement("td"); tr.appendChild(td3);
+					var td4=document.createElement("td"); tr.appendChild(td4);
+					var td5=document.createElement("td"); tr.appendChild(td5);
+					var msgDiv = document.getElementById("msgDiv");
+						msgDiv.style.marginTop = document.documentElement.scrollTop + "px";
+					var bgDiv = document.getElementById("bgDiv");
+						bgDiv.style.width = document.body.offsetwidth + "px";
+						bgDiv.style.height = screen.height + "px";
+					var popup=document.getElementById("popup");
+					var msgShut = document.getElementById("msgShut");
+					msgShut.onclick = function(){
+						bgDiv.style.display = msgDiv.style.display=popup.style.display = "none";
+				 		td1.innerHTML=input1.value;
+						td2.innerHTML=input2.value;
+				 		td3.innerHTML=input3.value;
+						td4.innerHTML=input4.value;
+				 		td5.innerHTML="<td><input type='button' value='编辑' onclick='editor(this)' /><input type='button' value='删除' onclick='del(this)' /></td>"
+						}
+					msgDiv.style.display = bgDiv.style.display=popup.style.display= "block";
+				}
+				//统计功能 之附属菜单的显现
+			count.onmouseover=counts;
+			function counts (){
+					var count=document.getElementById('count');
+					var attached=document.getElementById('attached');
+					var timer=null;
+					count.onmouseover=show;
+					count.onmouseout=hide;
+					attached.onmouseover=show;
+					attached.onmouseout=hide;
+			
+				function show(){
+						clearInterval(timer);
+						attached.style.display='block';
 					}
-					for(var i=1;i<4;i++){
-						r2mean+=parseInt(source.rows[2].cells[i].innerText);
-						var r2=Math.floor(r2mean/3);
+				function hide(){
+						timer=setTimeout(function(){
+							attached.style.display='none';
+							},200);
+						}
 					}
-					for(var i=1;i<4;i++){
-						r3mean+=parseInt(source.rows[3].cells[i].innerText);
-						var r3=Math.floor(r3mean/3);
+				var data=[];
+				function getData(){
+					var origintr=document.getElementById("source").getElementsByTagName("tr");
+					for(var i=0;i<origintr.length;i++){
+						var tdName=origintr[i].getElementsByTagName('td')[0].innerText;
+						var num="";
+						data[i]=[];
+						data[i].push(tdName);
+						for(var j=1;j<4;j++){
+							 num=origintr[i].getElementsByTagName("td")[j].innerHTML;
+							 data[i].push(num);
+						}
 					}
-					for(var i=1;i<4;i++){
-						r4mean+=parseInt(source.rows[4].cells[i].innerText);
-						var r4=Math.floor(r4mean/3);
+					console.log(data);
+					return data;
+				}
+			
+				//学科平均 
+			function mean(){
+					var source=document.getElementById('source');
+					var subjeceMean="各科平均";
+					var linear=0;
+					var calculs=0;
+					var language=0;
+					for(var i=1;i<source.rows.length;i++){
+						linear+=parseInt(source.rows[i].cells[1].innerText);
+						var line=Math.floor(linear/(source.rows.length-1));
+						}
+					for(var i=1;i<source.rows.length;i++){
+						calculs+=parseInt(source.rows[i].cells[2].innerText);
+						var calcul=Math.floor(calculs/(source.rows.length-1));
+					}
+					for(var i=1;i<source.rows.length;i++){
+						language+=parseInt(source.rows[i].cells[3].innerText);
+						var langua=Math.floor(language/(source.rows.length-1));
+					}
+					//var tr="<tr><td>"+subjeceMean+"</td>"+"<td>"+linear+"</td>"+"<td>"+calculs+"</td>"
+  					//	+"<td>"+language+"</td></tr>"; 
+					// 上面这种格式写行数据无效  不知原因
+					var resort=document.getElementById("resort");
+					var tr=document.createElement("tr"); resort.appendChild(tr);
+					var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科平均";
+					var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=line;
+					var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calcul;
+					var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=langua;
+				}
+				//学科总分 
+			function total(){
+					var source=document.getElementById('source');
+					var subjeceMean="各科总分";
+					var linear=0;
+					var calculs=0;
+					var language=0;
+					for(var i=1;i<source.rows.length;i++){
+						linear+=parseInt(source.rows[i].cells[1].innerText);
+					}
+					for(var i=1;i<source.rows.length;i++){
+						calculs+=parseInt(source.rows[i].cells[2].innerText);
+					}
+					for(var i=1;i<source.rows.length;i++){
+						language+=parseInt(source.rows[i].cells[3].innerText);
 					}
 					var resort=document.getElementById("resort");
 					var tr=document.createElement("tr"); resort.appendChild(tr);
-					var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML=r1;
-					var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=r2;
-					var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=r3;
-					var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=r4;
+					var td1=document.createElement("td"); tr.appendChild(td1); td1.innerHTML="各科总分";
+					var td2=document.createElement("td"); tr.appendChild(td2); td2.innerHTML=linear;
+					var td3=document.createElement("td"); tr.appendChild(td3); td3.innerHTML=calculs;
+					var td4=document.createElement("td"); tr.appendChild(td4); td4.innerHTML=language;	
 				}
-
+				//学生平均分
+				//source.rows.length; 行数
+				//根据行数来创建td,rxmean,rx;  用num来控制行
+			function personal(){
+					var source=document.getElementById("source");
+					var trrows=source.rows.length;
+					var resort=document.getElementById("resort");
+					var tr=document.createElement("tr"); resort.appendChild(tr);
+					//var r1mean=0,r2mean=0,r3mean=0,r4mean=0;
+					//for(var k=1;k<trrows;k++){var td=document.createElement("td")}
+					//console.log(tdk);
+					//下面这个for循环用来处理循环分数
+					var tdName=['td1','td2','td3','td4','td5','td6'];
+					var meanR=['mean1','mean2','mean3','mean4','mean5','mean6'];
+					var rNum=['r1','r2','r3','r4','r5','r6'];
+					for(var i=1,num=0;i<trrows;i++){
+						var temp=0;
+						for(var j=1;j<4;j++){
+							temp+=parseInt(source.rows[i].cells[j].innerHTML);
+							//meanR[num]+=parseInt(source.rows[i].cells[j].innerHTML);
+							//出现nan  暂时分析有两个原因  第一个数组存储的类型是字符串  第二个就是parseInt()遇到不能解析的结果为nan 第二个不成立 
+							// 问题出在 "+"号的身上 也就是+=导致的问题
+							//meanR[num]=Number.NaN;
+							//document.write(meanR[num]);
+							}
+							console.log(temp);
+							meanR[num]=temp;
+							rNum[num]=Math.floor(meanR[num]/3);
+							tdName[num]=document.createElement("td");
+							tdName[num].innerHTML=rNum[num];
+							tr.appendChild(tdName[num]);
+							num++;
+						}
+				}
 			function render(data){
-				var newtable=[];
-				for(var i=0;i<data.length;i++){
-					var tr="<tr><td>"+data[i][0]+"</td>"+"<td>"+data[i][1]+"</td>"+"<td>"+data[i][2]+"</td>"
-						+"<td>"+data[i][3]+"</td></tr>"
+					var newtable=[];
+					for(var i=0;i<data.length;i++){
+						var tr="<tr><td>"+data[i][0]+"</td>"+"<td>"+data[i][1]+"</td>"+"<td>"+data[i][2]+"</td>"
+							+"<td>"+data[i][3]+"</td></tr>"
 						newtable.push(tr);
-				}
+						}
 				
-				document.getElementById("resort").innerHTML=newtable.join("");
-			}
+					document.getElementById("resort").innerHTML=newtable.join("");
+				}
 			function btnHandle(){
-				var aqiData=getData();
-				render(aqiData);
-//				下面三行加上去就相当于在执行之前就已经执行了一次函数
-//				var aqimean=mean();
-//				var aqitotal=total();
-//				var aqipersonal=personal();
-			};
+					var aqiData=getData();
+					render(aqiData);
+					//下面三行加上去就相当于在执行之前就已经执行了一次函数
+					//	var aqimean=mean();
+					//	var aqitotal=total();
+					//	var aqipersonal=personal();
+				};
 
 			function init(){
-				document.getElementById('sort-btn').onclick=btnHandle;
-				document.getElementById('btn-mean').onclick=mean;
-				document.getElementById('btn-total').onclick=total;
-				document.getElementById('btn-personal').onclick=personal;
-			}
+					document.getElementById('sort-btn').onclick=btnHandle;
+					document.getElementById('btn-mean').onclick=mean;
+					document.getElementById('btn-total').onclick=total;
+					document.getElementById('btn-personal').onclick=personal;
+				}
 			init();
 		</script>
 	</body>
